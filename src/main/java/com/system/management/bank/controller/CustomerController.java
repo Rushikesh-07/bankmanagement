@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.system.management.bank.entity.Customer;
@@ -30,6 +31,19 @@ public class CustomerController {
 	
 	@PostMapping("/new-save")
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+        Customer savedCustomer = customerService.saveCustomer(customer);
+        return ResponseEntity.ok(savedCustomer);
+    }
+	
+	@PostMapping("/simple-save")
+    public ResponseEntity<Customer> simpleSaveCustomer(@RequestParam String name,
+            @RequestParam String phone,
+            @RequestParam String address) {
+		
+		Customer customer = new Customer();
+        customer.setName(name);
+        customer.setPhone(phone);
+        customer.setAddress(address);
         Customer savedCustomer = customerService.saveCustomer(customer);
         return ResponseEntity.ok(savedCustomer);
     }
